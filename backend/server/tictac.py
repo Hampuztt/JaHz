@@ -1,7 +1,9 @@
 import sys
 
-print("This is a message from python")
+print("This is a message from python", flush=True)
 
-received_string = sys.stdin.read().strip()
+while True:
+    received_string = sys.stdin.readline().strip()
+    if received_string:
+        print(received_string, flush=True)
 
-print(received_string)
