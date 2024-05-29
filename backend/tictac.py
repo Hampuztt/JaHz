@@ -6,9 +6,6 @@ from torch.distributions import Categorical
 from enum import Enum
 
 
-REWARDS = []
-
-
 class PolicyNetwork(nn.Module):
     def __init__(self):
         super(PolicyNetwork, self).__init__()
@@ -185,7 +182,6 @@ def play_pve(policy_net, human_starts=True):
             place_move(board, action, player_ai)
             print(f"AI placed {player_ai} at position {action + 1}")
             print_board(board)
-            print(len(board))
 
             state = GameStates.GAMEON
             if check_winner(board, current_player):
