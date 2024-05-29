@@ -1,14 +1,67 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('square1').addEventListener('click', square1Click);
-    document.getElementById('square2').addEventListener('click', square2Click);
-    document.getElementById('square3').addEventListener('click', square3Click);
-    document.getElementById('square4').addEventListener('click', square4Click);
-    document.getElementById('square5').addEventListener('click', square5Click);
-    document.getElementById('square6').addEventListener('click', square6Click);
-    document.getElementById('square7').addEventListener('click', square7Click);
-    document.getElementById('square8').addEventListener('click', square8Click);
-    document.getElementById('square9').addEventListener('click', square9Click);
+    document.getElementById('square1').addEventListener('click', () => handleSquareClick(1));
+    document.getElementById('square2').addEventListener('click', () => handleSquareClick(2));
+    document.getElementById('square3').addEventListener('click', () => handleSquareClick(3));
+    document.getElementById('square4').addEventListener('click', () => handleSquareClick(4));
+    document.getElementById('square5').addEventListener('click', () => handleSquareClick(5));
+    document.getElementById('square6').addEventListener('click', () => handleSquareClick(6));
+    document.getElementById('square7').addEventListener('click', () => handleSquareClick(7));
+    document.getElementById('square8').addEventListener('click', () => handleSquareClick(8));
+    document.getElementById('square9').addEventListener('click', () => handleSquareClick(9));
 });
+
+
+let currentPlayer = 'X';
+const board = Array(9).fill(null);
+
+function handleSquareClick(index) {
+    //toggleColor(document.getElementById(`square${index}`))
+    postTile(index)
+    console.log(board[index -1])
+    if (board[index - 1] || checkWinner()) {
+        return;
+    }
+    board[index - 1] = currentPlayer;
+
+    let square;
+
+    if(currentPlayer === 'O'){
+    document.getElementById(`so${index}`).style.display = 'block';
+    }
+    else {
+    document.getElementById(`sx${index}`).style.display = 'block';
+  }
+
+    if (checkWinner()) {
+//        document.getElementById('status').textContent = `Player ${currentPlayer} wins!`;
+    //} else if (board.every(square => square)) {
+     //   document.getElementById('status').textContent = `It's a draw!`;
+    } else {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    }
+}
+
+function checkWinner() {
+  const winningCombinations = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+    [0, 4, 8], [2, 4, 6]             // diagonals
+  ];
+
+  for (const combination of winningCombinations) {
+    const [a, b, c] = combination;
+    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+      console.log(`${currentPlayer} is the winner`)
+      var squares = document.getElementsByClassName('square')
+      for(var i = 0 ; i < squares.length; i++){
+         squares[i].style.backgroundColor = 'blue' 
+      }
+      return true;
+    }
+  }
+  return false;
+}
+
 
 function postTile(tile) {
     const data = { tile: tile };
@@ -36,49 +89,3 @@ function toggleColor(square) {
         square.style.backgroundColor = 'red';
     }
 }
-
-function square1Click() {
-    toggleColor(document.getElementById('square1'));
-    postTile('a1')
-}
-
-function square2Click() {
-    toggleColor(document.getElementById('square2'));
-    postTile('a2')
-}
-
-function square3Click() {
-    toggleColor(document.getElementById('square3'));
-    postTile('a3')
-}
-
-function square4Click() {
-    toggleColor(document.getElementById('square4'));
-    postTile('b1')
-}
-
-function square5Click() {
-    toggleColor(document.getElementById('square5'));
-    postTile('b2')
-}
-
-function square6Click() {
-    toggleColor(document.getElementById('square6'));
-    postTile('b3')
-}
-
-function square7Click() {
-    toggleColor(document.getElementById('square7'));
-    postTile('c1')
-}
-
-function square8Click() {
-    toggleColor(document.getElementById('square8'));
-    postTile('c2')
-}
-
-function square9Click() {
-    toggleColor(document.getElementById('square9'));
-    postTile('c3')
-}
-
