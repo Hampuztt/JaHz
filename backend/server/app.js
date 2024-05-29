@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors')
+const path = require('path')
 const app = express();
 const port = 3000;
 
@@ -7,11 +8,14 @@ const { spawn } = require('child_process');
 const pythonProcess = spawn('python3', ['tictac.py']);
 let message = 'no message';
 
+console.log('hello')
+
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '../..', 'frontend')))
 
 app.get('/', (req, res) => {
-    res.send(message);
+    res.sendFile(path.join(__dirname, '../..', 'frontend', 'index.html'))
 });
 
 app.listen(port, () => {
