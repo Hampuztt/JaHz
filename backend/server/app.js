@@ -1,8 +1,9 @@
+require('dotenv').config()
 const express = require('express');
 const cors = require('cors')
 const path = require('path')
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
 const { spawn } = require('child_process');
 const pythonProcess = spawn('python3', ['tictac.py']);
@@ -19,7 +20,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`); 
+    console.log(`listening at port: "${port}`); 
     pythonProcess.stdout.on('data', (data) => {
         message = `${data}`; // will give weird values in future
         console.log(`stdout: ${data}`);

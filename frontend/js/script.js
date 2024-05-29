@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 function postTile(tile) {
     const data = { tile: tile };
 
-    fetch('http://localhost:3000/tile', {
+    fetch('/tile', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
