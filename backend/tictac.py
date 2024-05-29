@@ -83,7 +83,7 @@ def print_board(game_state):
 
 
 def get_valid_input(board) -> int:
-    print_board(board)
+    # print_board(board)
     # Possible moves will be the REAL index
     possible_moves = gen_possible_moves(board)
     shown_moves = [i + 1 for i in possible_moves]
@@ -160,9 +160,7 @@ def play_pve(policy_net, human_starts=True):
         if current_player.value == player_human:
             state = player_turn(board, player_human)
         else:
-            state_tensor = torch.tensor(
-                board == Players.ONE.value, device="cuda", dtype=torch.float32
-            )
+            state_tensor = torch.tensor(board == Players.ONE.value, dtype=torch.float32)
             state_tensor = torch.cat(
                 (
                     state_tensor,
@@ -187,6 +185,7 @@ def play_pve(policy_net, human_starts=True):
             place_move(board, action, player_ai)
             print(f"AI placed {player_ai} at position {action + 1}")
             print_board(board)
+            print(len(board))
 
             state = GameStates.GAMEON
             if check_winner(board, current_player):
@@ -331,10 +330,9 @@ def try_ai():
 
     train(None, policy_net1, policy_net2, optimizer1, optimizer2, episodes=1000)
 
-    play_pve(policy_net1)
+    play_pve(policy_net1.cpu())
 
 
 if __name__ == "__main__":
-
     try_ai()
     # play_one_game()
